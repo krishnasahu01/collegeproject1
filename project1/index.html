@@ -1,0 +1,1414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CyberShield Education | Field Study on Cybersecurity Policies</title>
+<meta name="description" content="Field Study on Cybersecurity Policies in Educational Institutions - CyberShield Education" />
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<!-- Fontsource Inter -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-600-normal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontsource/fonts/jetbrains-mono@latest/latin-400-normal.css" />
+
+<style>
+/* =========================================================
+   CyberShield Education - Field Study Website
+   Theme: Dark navy + cyan accents, glassmorphism
+   ========================================================= */
+
+:root{
+  --bg-0:#05080f;
+  --bg-1:#0a1020;
+  --bg-2:#0f1a33;
+  --navy:#0b1733;
+  --cyan:#22d3ee;
+  --cyan-2:#06b6d4;
+  --blue:#3b82f6;
+  --purple:#8b5cf6;
+  --text:#e6f1ff;
+  --muted:#9fb3d1;
+  --glass:rgba(255,255,255,0.04);
+  --glass-border:rgba(34,211,238,0.18);
+  --glow:0 0 20px rgba(34,211,238,0.35);
+  --radius:14px;
+  --trans:0.35s cubic-bezier(.2,.7,.2,1);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg-0);
+  color:var(--text);
+  line-height:1.65;
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* Background grid + glow */
+body::before{
+  content:"";
+  position:fixed;inset:0;
+  background:
+    radial-gradient(1200px 600px at 10% -10%, rgba(34,211,238,0.12), transparent 60%),
+    radial-gradient(900px 500px at 110% 20%, rgba(59,130,246,0.10), transparent 60%),
+    radial-gradient(700px 500px at 50% 110%, rgba(139,92,246,0.10), transparent 60%),
+    linear-gradient(180deg,#05080f 0%, #070c18 100%);
+  z-index:-2;
+}
+body::after{
+  content:"";
+  position:fixed;inset:0;
+  background-image:
+    linear-gradient(rgba(34,211,238,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34,211,238,0.05) 1px, transparent 1px);
+  background-size:60px 60px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  z-index:-1;
+  pointer-events:none;
+}
+
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+
+.container{width:min(1200px,92%);margin-inline:auto}
+
+/* ===================== NAVBAR ===================== */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  background:rgba(5,8,15,0.65);
+  border-bottom:1px solid rgba(34,211,238,0.12);
+  transition:var(--trans);
+}
+.navbar.scrolled{background:rgba(5,8,15,0.9)}
+.nav-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+  font-weight:700;font-size:1.1rem;letter-spacing:0.5px;
+}
+.logo-icon{
+  width:38px;height:38px;border-radius:10px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:#001018;font-size:1rem;
+  box-shadow:var(--glow);
+}
+.logo span.accent{color:var(--cyan)}
+.nav-links{display:flex;gap:6px;list-style:none;align-items:center}
+.nav-links a{
+  padding:8px 12px;border-radius:8px;
+  font-size:0.9rem;color:var(--muted);
+  transition:var(--trans);position:relative;
+}
+.nav-links a:hover{color:var(--cyan);background:rgba(34,211,238,0.06)}
+.nav-links a.active{color:var(--cyan)}
+
+.hamburger{
+  display:none;width:42px;height:42px;border-radius:10px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  place-items:center;font-size:1.1rem;color:var(--cyan);
+}
+
+@media (max-width: 980px){
+  .nav-links{
+    position:fixed;top:68px;right:16px;left:16px;
+    flex-direction:column;align-items:stretch;gap:4px;
+    padding:14px;border-radius:14px;
+    background:rgba(10,16,32,0.95);
+    border:1px solid var(--glass-border);
+    backdrop-filter:blur(18px);
+    transform:translateY(-20px);opacity:0;pointer-events:none;
+    transition:var(--trans);
+    max-height:75vh;overflow-y:auto;
+  }
+  .nav-links.open{transform:translateY(0);opacity:1;pointer-events:auto}
+  .nav-links a{padding:12px 14px;font-size:1rem}
+  .hamburger{display:grid}
+}
+
+/* ===================== BUTTONS ===================== */
+.btn{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:12px 22px;border-radius:10px;
+  font-weight:600;font-size:0.95rem;
+  transition:var(--trans);
+  border:1px solid transparent;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:#001018;
+  box-shadow:0 6px 20px rgba(34,211,238,0.25);
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(34,211,238,0.45)}
+.btn-ghost{
+  background:var(--glass);color:var(--text);
+  border:1px solid var(--glass-border);
+}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px)}
+
+/* ===================== SECTIONS ===================== */
+section{padding:100px 0;position:relative}
+.section-head{text-align:center;margin-bottom:50px}
+.eyebrow{
+  display:inline-block;padding:6px 14px;border-radius:999px;
+  font-size:0.78rem;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--cyan);background:rgba(34,211,238,0.08);
+  border:1px solid rgba(34,211,238,0.25);
+  margin-bottom:14px;
+}
+.section-title{
+  font-size:clamp(1.8rem,3.5vw,2.6rem);
+  font-weight:700;letter-spacing:-0.5px;
+  background:linear-gradient(135deg,#fff 0%, var(--cyan) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  margin-bottom:12px;
+}
+.section-sub{color:var(--muted);max-width:720px;margin:0 auto;font-size:1rem}
+
+/* ===================== HERO ===================== */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:120px 0 60px;position:relative;overflow:hidden;
+}
+#particles{position:absolute;inset:0;z-index:0}
+.hero-grid{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:1.1fr 0.9fr;gap:50px;align-items:center;
+}
+.hero h1{
+  font-size:clamp(2rem,4.5vw,3.4rem);
+  line-height:1.15;font-weight:700;letter-spacing:-1px;
+  margin-bottom:18px;
+}
+.hero h1 .grad{
+  background:linear-gradient(135deg,var(--cyan) 0%, var(--blue) 50%, var(--purple) 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p.lead{color:var(--muted);font-size:1.08rem;margin-bottom:28px;max-width:560px}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px}
+
+.hero-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+  padding:16px;border-radius:14px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(12px);
+}
+.hero-stats .stat{text-align:center}
+.hero-stats .stat b{display:block;font-size:1.4rem;color:var(--cyan);font-weight:700}
+.hero-stats .stat span{font-size:0.78rem;color:var(--muted)}
+
+/* Hero illustration */
+.hero-visual{
+  position:relative;aspect-ratio:1/1;max-width:480px;margin-inline:auto;
+}
+.shield-wrap{
+  position:absolute;inset:0;display:grid;place-items:center;
+}
+.shield{
+  width:70%;height:70%;position:relative;
+  filter:drop-shadow(0 0 30px rgba(34,211,238,0.4));
+  animation:float 6s ease-in-out infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-14px)}
+}
+.orbit{
+  position:absolute;inset:0;border:1px dashed rgba(34,211,238,0.25);
+  border-radius:50%;animation:spin 22s linear infinite;
+}
+.orbit.o2{inset:10%;animation-duration:16s;animation-direction:reverse;border-color:rgba(59,130,246,0.25)}
+.orbit.o3{inset:22%;animation-duration:12s;border-color:rgba(139,92,246,0.25)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.orbit i{
+  position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+  width:30px;height:30px;border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  display:grid;place-items:center;color:#001018;font-size:0.75rem;
+  box-shadow:var(--glow);
+}
+.orbit.o2 i{background:linear-gradient(135deg,var(--blue),var(--purple))}
+.orbit.o3 i{background:linear-gradient(135deg,var(--purple),var(--cyan))}
+
+@media (max-width: 900px){
+  .hero-grid{grid-template-columns:1fr;gap:40px}
+  .hero-visual{max-width:340px}
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ===================== CARDS (GLASS) ===================== */
+.grid{display:grid;gap:22px}
+.grid-3{grid-template-columns:repeat(3,1fr)}
+.grid-4{grid-template-columns:repeat(4,1fr)}
+.grid-2{grid-template-columns:repeat(2,1fr)}
+@media (max-width:900px){.grid-3,.grid-4{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.grid-3,.grid-4,.grid-2{grid-template-columns:1fr}}
+
+.card{
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);
+  padding:26px;
+  backdrop-filter:blur(12px);
+  transition:var(--trans);
+  position:relative;overflow:hidden;
+}
+.card::before{
+  content:"";position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(34,211,238,0.08),transparent 60%);
+  opacity:0;transition:var(--trans);
+}
+.card:hover{transform:translateY(-6px);border-color:rgba(34,211,238,0.45);box-shadow:0 10px 30px rgba(0,0,0,0.4), var(--glow)}
+.card:hover::before{opacity:1}
+.card .icon{
+  width:52px;height:52px;border-radius:12px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,rgba(34,211,238,0.2),rgba(59,130,246,0.2));
+  border:1px solid rgba(34,211,238,0.3);
+  color:var(--cyan);font-size:1.3rem;margin-bottom:16px;
+  position:relative;z-index:1;
+}
+.card h3{font-size:1.1rem;margin-bottom:8px;position:relative;z-index:1}
+.card p{color:var(--muted);font-size:0.93rem;position:relative;z-index:1}
+
+/* ===================== OBJECTIVES (numbered) ===================== */
+.obj-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media (max-width:900px){.obj-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:500px){.obj-grid{grid-template-columns:1fr}}
+.obj-card{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:22px;
+  backdrop-filter:blur(12px);transition:var(--trans);
+  display:flex;gap:14px;align-items:flex-start;
+}
+.obj-card:hover{border-color:var(--cyan);transform:translateY(-4px)}
+.obj-num{
+  font-family:'JetBrains Mono',monospace;
+  font-size:1.6rem;font-weight:700;
+  color:var(--cyan);min-width:46px;
+  text-shadow:0 0 14px rgba(34,211,238,0.5);
+}
+.obj-card p{color:var(--muted);font-size:0.93rem}
+
+/* ===================== METHODOLOGY TIMELINE ===================== */
+.timeline{
+  position:relative;max-width:900px;margin:0 auto;
+  padding:20px 0;
+}
+.timeline::before{
+  content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,transparent,var(--cyan),var(--blue),transparent);
+  transform:translateX(-50%);
+}
+.tl-item{
+  position:relative;width:50%;padding:18px 36px;
+}
+.tl-item:nth-child(odd){left:0;text-align:right}
+.tl-item:nth-child(even){left:50%}
+.tl-dot{
+  position:absolute;top:26px;width:18px;height:18px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 0 4px rgba(34,211,238,0.2),var(--glow);
+  z-index:2;
+}
+.tl-item:nth-child(odd) .tl-dot{right:-9px}
+.tl-item:nth-child(even) .tl-dot{left:-9px}
+.tl-card{
+  background:var(--glass);border:1px solid var(--glass-border);
+  padding:18px 20px;border-radius:12px;backdrop-filter:blur(12px);
+  transition:var(--trans);
+}
+.tl-card:hover{border-color:var(--cyan);transform:translateY(-3px)}
+.tl-step{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:0.8rem;letter-spacing:1px}
+.tl-card h4{margin:4px 0 6px;font-size:1.05rem}
+.tl-card p{color:var(--muted);font-size:0.9rem}
+
+@media (max-width:760px){
+  .timeline::before{left:18px}
+  .tl-item,.tl-item:nth-child(even){width:100%;left:0;padding:14px 14px 14px 48px;text-align:left}
+  .tl-item:nth-child(odd) .tl-dot,.tl-item:nth-child(even) .tl-dot{left:9px;right:auto}
+}
+
+.method-card{
+  max-width:700px;margin:40px auto 0;
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:26px;backdrop-filter:blur(12px);
+}
+.method-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:14px}
+.method-list li{
+  list-style:none;display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border-radius:10px;
+  background:rgba(34,211,238,0.05);border:1px solid rgba(34,211,238,0.15);
+  font-size:0.92rem;
+}
+.method-list i{color:var(--cyan)}
+@media (max-width:500px){.method-list{grid-template-columns:1fr}}
+
+/* ===================== POLICY AREAS ===================== */
+.policy-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media (max-width:1000px){.policy-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:500px){.policy-grid{grid-template-columns:1fr}}
+.policy-card{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:22px;
+  backdrop-filter:blur(12px);transition:var(--trans);
+  position:relative;overflow:hidden;
+}
+.policy-card::after{
+  content:"";position:absolute;top:0;left:0;width:100%;height:3px;
+  background:linear-gradient(90deg,var(--cyan),var(--blue));
+  transform:scaleX(0);transform-origin:left;transition:var(--trans);
+}
+.policy-card:hover::after{transform:scaleX(1)}
+.policy-card:hover{transform:translateY(-5px);border-color:var(--cyan)}
+.policy-card .icon{margin-bottom:14px}
+.policy-card h3{font-size:1.02rem;margin-bottom:8px}
+.policy-card p{color:var(--muted);font-size:0.88rem}
+
+/* ===================== SURVEY ===================== */
+.survey-wrap{
+  max-width:820px;margin:0 auto;
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:18px;padding:32px;backdrop-filter:blur(14px);
+}
+.survey-q{
+  padding:18px 20px;margin-bottom:16px;border-radius:12px;
+  background:rgba(255,255,255,0.02);
+  border:1px solid rgba(34,211,238,0.1);
+  transition:var(--trans);
+}
+.survey-q:hover{border-color:rgba(34,211,238,0.3)}
+.survey-q .q-title{font-weight:600;margin-bottom:12px;display:flex;gap:10px}
+.survey-q .q-title span.num{
+  font-family:'JetBrains Mono',monospace;color:var(--cyan);
+  background:rgba(34,211,238,0.1);padding:2px 10px;border-radius:6px;font-size:0.85rem;
+}
+.options{display:flex;flex-wrap:wrap;gap:10px}
+.opt{
+  padding:8px 16px;border-radius:999px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.08);
+  font-size:0.88rem;cursor:pointer;transition:var(--trans);
+  color:var(--muted);
+}
+.opt:hover{border-color:var(--cyan);color:var(--cyan)}
+.opt.selected{
+  background:linear-gradient(135deg,rgba(34,211,238,0.2),rgba(59,130,246,0.2));
+  border-color:var(--cyan);color:var(--text);
+  box-shadow:0 0 0 2px rgba(34,211,238,0.15);
+}
+.survey-actions{display:flex;justify-content:space-between;align-items:center;margin-top:20px;flex-wrap:wrap;gap:14px}
+.survey-status{color:var(--muted);font-size:0.9rem}
+.thanks{
+  display:none;text-align:center;padding:30px;border-radius:14px;
+  background:linear-gradient(135deg,rgba(34,211,238,0.1),rgba(59,130,246,0.1));
+  border:1px solid var(--cyan);margin-top:20px;
+}
+.thanks.show{display:block;animation:fadeUp 0.6s ease}
+.thanks i{font-size:2.5rem;color:var(--cyan);margin-bottom:10px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===================== FINDINGS ===================== */
+.findings-grid{display:grid;grid-template-columns:1.2fr 0.8fr;gap:30px;align-items:center}
+@media (max-width:900px){.findings-grid{grid-template-columns:1fr}}
+.bar-chart{display:flex;flex-direction:column;gap:18px}
+.bar-row{display:grid;grid-template-columns:180px 1fr 60px;gap:14px;align-items:center}
+@media (max-width:600px){.bar-row{grid-template-columns:1fr;gap:6px}}
+.bar-label{font-size:0.95rem;color:var(--text)}
+.bar-track{
+  height:14px;border-radius:999px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(34,211,238,0.12);
+  overflow:hidden;position:relative;
+}
+.bar-fill{
+  height:100%;border-radius:999px;
+  background:linear-gradient(90deg,var(--cyan),var(--blue));
+  width:0;transition:width 1.4s cubic-bezier(.2,.7,.2,1);
+  box-shadow:0 0 12px rgba(34,211,238,0.5);
+}
+.bar-val{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-weight:700;text-align:right}
+
+.donut-wrap{display:grid;place-items:center}
+.donut{position:relative;width:260px;height:260px}
+.donut svg{transform:rotate(-90deg)}
+.donut-center{
+  position:absolute;inset:0;display:grid;place-items:center;text-align:center;
+}
+.donut-center b{font-size:1.8rem;color:var(--cyan);display:block}
+.donut-center span{color:var(--muted);font-size:0.85rem}
+.demo-note{
+  margin-top:24px;padding:12px 16px;border-radius:10px;
+  background:rgba(255,193,7,0.08);border:1px solid rgba(255,193,7,0.25);
+  color:#ffd966;font-size:0.88rem;display:flex;gap:10px;align-items:center;
+}
+
+/* ===================== THREATS ===================== */
+.threat-card{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:22px;backdrop-filter:blur(12px);
+  transition:var(--trans);position:relative;overflow:hidden;
+}
+.threat-card:hover{transform:translateY(-5px);border-color:#f87171;box-shadow:0 10px 30px rgba(248,113,113,0.15)}
+.threat-card .icon{
+  background:linear-gradient(135deg,rgba(248,113,113,0.2),rgba(239,68,68,0.15));
+  border-color:rgba(248,113,113,0.35);color:#fca5a5;
+}
+.threat-card h3{font-size:1.02rem;margin-bottom:8px}
+.threat-card p{color:var(--muted);font-size:0.88rem;margin-bottom:12px}
+.threat-card .tip{
+  font-size:0.82rem;padding:8px 10px;border-radius:8px;
+  background:rgba(34,211,238,0.06);border:1px solid rgba(34,211,238,0.18);
+  color:var(--cyan);
+}
+.threat-card .tip i{margin-right:6px}
+
+/* ===================== RECOMMENDATIONS ===================== */
+.rec-list{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:14px;
+  max-width:980px;margin:0 auto;
+}
+@media (max-width:700px){.rec-list{grid-template-columns:1fr}}
+.rec-item{
+  display:flex;align-items:center;gap:14px;
+  padding:16px 18px;border-radius:12px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  backdrop-filter:blur(10px);transition:var(--trans);
+}
+.rec-item:hover{border-color:var(--cyan);transform:translateX(4px)}
+.rec-check{
+  width:34px;height:34px;border-radius:10px;flex-shrink:0;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,rgba(34,211,238,0.2),rgba(59,130,246,0.2));
+  color:var(--cyan);border:1px solid rgba(34,211,238,0.3);
+}
+.rec-item span{font-size:0.95rem}
+
+/* ===================== STUDENT TIPS ===================== */
+.tips-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media (max-width:1000px){.tips-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:500px){.tips-grid{grid-template-columns:1fr}}
+.tip-card{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:var(--radius);padding:22px;backdrop-filter:blur(12px);
+  transition:var(--trans);text-align:center;
+}
+.tip-card:hover{transform:translateY(-5px);border-color:var(--cyan)}
+.tip-emoji{font-size:2.2rem;margin-bottom:10px;display:block}
+.tip-card h4{font-size:1rem;margin-bottom:6px}
+.tip-card p{color:var(--muted);font-size:0.85rem}
+
+/* ===================== CONCLUSION ===================== */
+.conclusion-wrap{
+  max-width:900px;margin:0 auto;
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:18px;padding:36px;backdrop-filter:blur(14px);
+}
+.conclusion-wrap p{color:var(--muted);margin-bottom:16px;font-size:1rem}
+.highlight-msg{
+  margin-top:20px;padding:20px;border-radius:12px;text-align:center;
+  background:linear-gradient(135deg,rgba(34,211,238,0.12),rgba(139,92,246,0.12));
+  border:1px solid var(--cyan);
+  font-size:1.2rem;font-weight:600;color:var(--cyan);
+  box-shadow:var(--glow);
+}
+
+/* ===================== PROJECT INFO ===================== */
+.info-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:16px;
+  max-width:800px;margin:0 auto;
+}
+@media (max-width:600px){.info-grid{grid-template-columns:1fr}}
+.info-item{
+  background:var(--glass);border:1px solid var(--glass-border);
+  border-radius:12px;padding:18px 20px;backdrop-filter:blur(10px);
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+}
+.info-item .label{color:var(--muted);font-size:0.85rem;display:block;margin-bottom:4px}
+.info-item .value{font-weight:600;color:var(--text);font-size:0.98rem}
+.info-item.placeholder .value{color:var(--cyan);font-family:'JetBrains Mono',monospace;font-size:0.9rem}
+
+/* ===================== FOOTER ===================== */
+footer{
+  border-top:1px solid rgba(34,211,238,0.15);
+  padding:50px 0 24px;margin-top:60px;
+  background:linear-gradient(180deg,transparent,rgba(5,8,15,0.6));
+}
+.foot-grid{
+  display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:30px;margin-bottom:30px;
+}
+@media (max-width:760px){.foot-grid{grid-template-columns:1fr;gap:24px}}
+.foot-brand p{color:var(--muted);font-size:0.9rem;margin-top:10px;max-width:360px}
+.foot-col h5{font-size:0.95rem;margin-bottom:12px;color:var(--cyan)}
+.foot-col ul{list-style:none;display:flex;flex-direction:column;gap:8px}
+.foot-col a{color:var(--muted);font-size:0.9rem;transition:var(--trans)}
+.foot-col a:hover{color:var(--cyan)}
+.foot-social{display:flex;gap:10px;margin-top:14px}
+.foot-social a{
+  width:36px;height:36px;border-radius:10px;
+  background:var(--glass);border:1px solid var(--glass-border);
+  display:grid;place-items:center;color:var(--muted);transition:var(--trans);
+}
+.foot-social a:hover{color:var(--cyan);border-color:var(--cyan);transform:translateY(-2px)}
+.foot-bottom{
+  text-align:center;padding-top:20px;border-top:1px solid rgba(255,255,255,0.05);
+  color:var(--muted);font-size:0.85rem;
+}
+
+/* ===================== BACK TO TOP ===================== */
+.to-top{
+  position:fixed;right:22px;bottom:22px;z-index:900;
+  width:46px;height:46px;border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--blue));
+  color:#001018;display:grid;place-items:center;
+  box-shadow:0 8px 22px rgba(34,211,238,0.4);
+  opacity:0;pointer-events:none;transform:translateY(10px);
+  transition:var(--trans);
+}
+.to-top.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.to-top:hover{transform:translateY(-3px)}
+
+/* ===================== REVEAL ANIMATION ===================== */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.8s ease, transform 0.8s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* Floating security icons in hero */
+.float-icons{position:absolute;inset:0;pointer-events:none;z-index:1}
+.float-icons i{
+  position:absolute;color:rgba(34,211,238,0.25);
+  animation:floatIcon 10s ease-in-out infinite;
+}
+@keyframes floatIcon{
+  0%,100%{transform:translateY(0) rotate(0)}
+  50%{transform:translateY(-20px) rotate(10deg)}
+}
+
+/* Selection */
+::selection{background:rgba(34,211,238,0.3);color:#fff}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--bg-0)}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--cyan),var(--blue));border-radius:10px}
+</style>
+</head>
+<body>
+
+<!-- ===================== NAVBAR ===================== -->
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="#home" class="logo">
+      <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+      <div>Cyber<span class="accent">Shield</span> Education</div>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About Study</a></li>
+      <li><a href="#objectives">Objectives</a></li>
+      <li><a href="#methodology">Methodology</a></li>
+      <li><a href="#survey">Survey</a></li>
+      <li><a href="#findings">Findings</a></li>
+      <li><a href="#policies">Policies</a></li>
+      <li><a href="#recommendations">Recommendations</a></li>
+      <li><a href="#conclusion">Conclusion</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </div>
+</nav>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero" id="home">
+  <canvas id="particles"></canvas>
+  <div class="float-icons">
+    <i class="fa-solid fa-lock" style="top:15%;left:8%;font-size:1.4rem"></i>
+    <i class="fa-solid fa-shield" style="top:70%;left:12%;font-size:1.8rem;animation-delay:-2s"></i>
+    <i class="fa-solid fa-key" style="top:25%;right:10%;font-size:1.2rem;animation-delay:-4s"></i>
+    <i class="fa-solid fa-user-shield" style="top:60%;right:8%;font-size:1.6rem;animation-delay:-6s"></i>
+    <i class="fa-solid fa-network-wired" style="top:85%;left:45%;font-size:1.3rem;animation-delay:-3s"></i>
+  </div>
+
+  <div class="container hero-grid">
+    <div class="hero-text reveal">
+      <span class="eyebrow"><i class="fa-solid fa-graduation-cap"></i> &nbsp;B.Sc. IT Field Study Project</span>
+      <h1>Field Study on <span class="grad">Cybersecurity Policies</span> in Educational Institutions</h1>
+      <p class="lead">Understanding cybersecurity awareness, practices, policies, and challenges in modern educational institutions.</p>
+      <div class="hero-cta">
+        <a href="#about" class="btn btn-primary"><i class="fa-solid fa-magnifying-glass-chart"></i> Explore Study</a>
+        <a href="#survey" class="btn btn-ghost"><i class="fa-solid fa-clipboard-list"></i> Take Survey</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b>04</b><span>Key Study Areas</span></div>
+        <div class="stat"><b>08</b><span>Policy Domains</span></div>
+        <div class="stat"><b>08</b><span>Survey Questions</span></div>
+        <div class="stat"><b>10</b><span>Recommendations</span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual reveal">
+      <div class="orbit"><i class="fa-solid fa-lock"></i></div>
+      <div class="orbit o2"><i class="fa-solid fa-wifi"></i></div>
+      <div class="orbit o3"><i class="fa-solid fa-shield-virus"></i></div>
+      <div class="shield-wrap">
+        <!-- Shield SVG illustration -->
+        <svg class="shield" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="sg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#22d3ee"/>
+              <stop offset="100%" stop-color="#3b82f6"/>
+            </linearGradient>
+            <linearGradient id="sg2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.6"/>
+              <stop offset="100%" stop-color="#22d3ee" stop-opacity="0.2"/>
+            </linearGradient>
+          </defs>
+          <path d="M100 10 L185 45 L185 115 C185 165 145 200 100 215 C55 200 15 165 15 115 L15 45 Z"
+                fill="url(#sg2)" stroke="url(#sg)" stroke-width="3"/>
+          <path d="M100 40 L160 62 L160 115 C160 150 135 178 100 190 C65 178 40 150 40 115 L40 62 Z"
+                fill="none" stroke="url(#sg)" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.6"/>
+          <!-- Lock icon -->
+          <g transform="translate(100 115)">
+            <rect x="-22" y="-5" width="44" height="34" rx="5" fill="url(#sg)"/>
+            <path d="M-14 -5 L-14 -18 A14 14 0 0 1 14 -18 L14 -5" fill="none" stroke="url(#sg)" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="0" cy="12" r="4" fill="#001018"/>
+            <rect x="-1.5" y="12" width="3" height="10" fill="#001018"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== ABOUT ===================== -->
+<section id="about">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">About the Study</span>
+      <h2 class="section-title">About the Field Study</h2>
+      <p class="section-sub">A focused academic study on how educational institutions protect their digital systems and data.</p>
+    </div>
+
+    <div class="reveal" style="max-width:860px;margin:0 auto 40px;text-align:center">
+      <p style="color:var(--muted);font-size:1.02rem">
+        Educational institutions use computers, internet services, cloud platforms, student portals, digital classrooms, online examinations, and other digital systems. These systems contain important information about students, teachers, staff, and the institution. The purpose of this field study is to understand how educational institutions protect their digital systems and data from cybersecurity threats.
+      </p>
+    </div>
+
+    <div class="grid grid-3 reveal">
+      <div class="card">
+        <div class="icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h3>Digital Security</h3>
+        <p>Protecting computers, networks, applications, and digital resources used across the institution.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><i class="fa-solid fa-database"></i></div>
+        <h3>Data Protection</h3>
+        <p>Protecting student, staff, academic, and administrative information from unauthorized access.</p>
+      </div>
+      <div class="card">
+        <div class="icon"><i class="fa-solid fa-user-graduate"></i></div>
+        <h3>Cyber Awareness</h3>
+        <p>Educating students and staff about safe digital practices and common cyber threats.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== OBJECTIVES ===================== -->
+<section id="objectives">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Goals</span>
+      <h2 class="section-title">Objectives of the Study</h2>
+      <p class="section-sub">The key objectives that guide this field study on cybersecurity policies.</p>
+    </div>
+
+    <div class="obj-grid reveal">
+      <div class="obj-card"><div class="obj-num">01</div><p>Understand existing cybersecurity policies in educational institutions.</p></div>
+      <div class="obj-card"><div class="obj-num">02</div><p>Study network and device security practices.</p></div>
+      <div class="obj-card"><div class="obj-num">03</div><p>Examine password and account security practices.</p></div>
+      <div class="obj-card"><div class="obj-num">04</div><p>Understand data protection methods used by institutions.</p></div>
+      <div class="obj-card"><div class="obj-num">05</div><p>Measure cybersecurity awareness among students and staff.</p></div>
+      <div class="obj-card"><div class="obj-num">06</div><p>Identify common cybersecurity risks faced by institutions.</p></div>
+      <div class="obj-card"><div class="obj-num">07</div><p>Study backup and recovery practices for institutional data.</p></div>
+      <div class="obj-card"><div class="obj-num">08</div><p>Provide recommendations for improving cybersecurity posture.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== METHODOLOGY ===================== -->
+<section id="methodology">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Process</span>
+      <h2 class="section-title">Research Methodology</h2>
+      <p class="section-sub">A step-by-step approach followed to conduct this field study.</p>
+    </div>
+
+    <div class="timeline reveal">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-step">STEP 01</div>
+          <h4>Planning</h4>
+          <p>Identify the cybersecurity areas to study and define the scope of research.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-step">STEP 02</div>
+          <h4>Questionnaire</h4>
+          <p>Prepare questions related to cybersecurity practices and institutional policies.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-step">STEP 03</div>
+          <h4>Field Study</h4>
+          <p>Collect responses from students/staff or observe institutional practices.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-step">STEP 04</div>
+          <h4>Data Analysis</h4>
+          <p>Analyze the collected responses and identify patterns or trends.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-step">STEP 05</div>
+          <h4>Findings</h4>
+          <p>Identify strengths, weaknesses, and cybersecurity gaps in the institution.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-step">STEP 06</div>
+          <h4>Recommendations</h4>
+          <p>Suggest practical improvements based on the study findings.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="method-card reveal">
+      <h3 style="margin-bottom:6px"><i class="fa-solid fa-folder-open" style="color:var(--cyan);margin-right:8px"></i> Data Collection Methods</h3>
+      <p style="color:var(--muted);font-size:0.92rem">Multiple methods were used to collect reliable data for this study.</p>
+      <ul class="method-list">
+        <li><i class="fa-solid fa-clipboard-list"></i> Questionnaire</li>
+        <li><i class="fa-solid fa-eye"></i> Observation</li>
+        <li><i class="fa-solid fa-comments"></i> Interviews</li>
+        <li><i class="fa-solid fa-book"></i> Secondary Research</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== POLICY AREAS ===================== -->
+<section id="policies">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Policy Domains</span>
+      <h2 class="section-title">Major Cybersecurity Policy Areas</h2>
+      <p class="section-sub">The eight key domains of cybersecurity policy studied in this project.</p>
+    </div>
+
+    <div class="policy-grid reveal">
+      <div class="policy-card">
+        <div class="icon"><i class="fa-solid fa-key"></i></div>
+        <h3>Password Security</h3>
+        <p>Strong passwords, password policies, and account protection.</p>
+      </div>
+      <div class="policy-card">
+        <div class="icon"><i class="fa-solid fa-network-wired"></i></div>
+        <h3>Network Security</h3>
+        <p>Secure Wi-Fi, firewalls, network monitoring, and access control.</p>
+      </div>
+      <div class="policy-card">
+        <div class="icon"><i class="fa-solid fa-user-lock"></i></div>
+        <h3>Data Privacy</h3>
+        <p>Protection of student, staff, and institutional information.</p>
+      </div>
+      <div class="policy-card">
+        <div class="icon"><i class="fa-solid fa-laptop-code"></i></div>
+        <h3>Device Security</h3>
+        <p>Antivirus, endpoint protection, updates, and secure configurations.</p>
+      </div>
+      <div class="policy-card">
+        <div class="icon"><i class="fa-solid fa-id-badge"></i></div>
+        <h3>Access Control</h3>
+        <p>Ensuring only authorized users can access systems and information.</p>
+      </div>
+      <div class="policy-card">
+        <div class="icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+        <h3>Backup & Recovery</h3>
+        <p>Regular backups and recovery plans for important data.</p>
+      </div>
+      <div class="policy-card">
+        <div class="icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+        <h3>Cybersecurity Awareness</h3>
+        <p>Training students and staff to recognize cyber threats.</p>
+      </div>
+      <div class="policy-card">
+        <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <h3>Incident Response</h3>
+        <p>Procedures for reporting and responding to cybersecurity incidents.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SURVEY ===================== -->
+<section id="survey">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Interactive Survey</span>
+      <h2 class="section-title">Cybersecurity Awareness & Policy Survey</h2>
+      <p class="section-sub">Answer the following questions based on your institution's practices. Your responses help the study.</p>
+    </div>
+
+    <form class="survey-wrap reveal" id="surveyForm" onsubmit="return false;">
+      <div class="survey-q" data-q="1">
+        <div class="q-title"><span class="num">Q1</span> Does your institution provide secure Wi-Fi/network access?</div>
+        <div class="options">
+          <div class="opt" data-val="Yes">Yes</div>
+          <div class="opt" data-val="No">No</div>
+          <div class="opt" data-val="Maybe">Maybe</div>
+        </div>
+      </div>
+      <div class="survey-q" data-q="2">
+        <div class="q-title"><span class="num">Q2</span> Are institutional computers protected with antivirus/endpoint security software?</div>
+        <div class="options">
+          <div class="opt" data-val="True">True</div>
+          <div class="opt" data-val="False">False</div>
+        </div>
+      </div>
+      <div class="survey-q" data-q="3">
+        <div class="q-title"><span class="num">Q3</span> Are software and operating systems regularly updated?</div>
+        <div class="options">
+          <div class="opt" data-val="Yes">Yes</div>
+          <div class="opt" data-val="No">No</div>
+          <div class="opt" data-val="Maybe">Maybe</div>
+        </div>
+      </div>
+      <div class="survey-q" data-q="4">
+        <div class="q-title"><span class="num">Q4</span> Does the institution restrict access to unauthorized websites or applications?</div>
+        <div class="options">
+          <div class="opt" data-val="Yes">Yes</div>
+          <div class="opt" data-val="No">No</div>
+          <div class="opt" data-val="Maybe">Maybe</div>
+        </div>
+      </div>
+      <div class="survey-q" data-q="5">
+        <div class="q-title"><span class="num">Q5</span> Does the institution provide cybersecurity awareness training?</div>
+        <div class="options">
+          <div class="opt" data-val="Yes">Yes</div>
+          <div class="opt" data-val="No">No</div>
+          <div class="opt" data-val="Maybe">Maybe</div>
+        </div>
+      </div>
+      <div class="survey-q" data-q="6">
+        <div class="q-title"><span class="num">Q6</span> Are students educated about phishing and suspicious links?</div>
+        <div class="options">
+          <div class="opt" data-val="Yes">Yes</div>
+          <div class="opt" data-val="No">No</div>
+          <div class="opt" data-val="Maybe">Maybe</div>
+        </div>
+      </div>
+      <div class="survey-q" data-q="7">
+        <div class="q-title"><span class="num">Q7</span> Does the institution have a procedure for reporting cybersecurity incidents?</div>
+        <div class="options">
+          <div class="opt" data-val="Yes">Yes</div>
+          <div class="opt" data-val="No">No</div>
+          <div class="opt" data-val="Maybe">Maybe</div>
+        </div>
+      </div>
+      <div class="survey-q" data-q="8">
+        <div class="q-title"><span class="num">Q8</span> Are important institutional data regularly backed up?</div>
+        <div class="options">
+          <div class="opt" data-val="Yes">Yes</div>
+          <div class="opt" data-val="No">No</div>
+          <div class="opt" data-val="Maybe">Maybe</div>
+        </div>
+      </div>
+
+      <div class="survey-actions">
+        <div class="survey-status" id="surveyStatus">Please answer all questions before submitting.</div>
+        <button type="button" class="btn btn-primary" id="submitSurvey"><i class="fa-solid fa-paper-plane"></i> Submit Survey</button>
+      </div>
+
+      <div class="thanks" id="thanksBox">
+        <i class="fa-solid fa-circle-check"></i>
+        <h3 style="margin-bottom:6px">Thank you!</h3>
+        <p style="color:var(--muted)">Your response has been recorded successfully.</p>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- ===================== FINDINGS ===================== -->
+<section id="findings">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Results</span>
+      <h2 class="section-title">Field Study Findings</h2>
+      <p class="section-sub">Overview of cybersecurity posture across major domains based on the study.</p>
+    </div>
+
+    <div class="findings-grid reveal">
+      <div class="bar-chart" id="barChart">
+        <div class="bar-row"><div class="bar-label">Network Security</div><div class="bar-track"><div class="bar-fill" data-val="85"></div></div><div class="bar-val">85%</div></div>
+        <div class="bar-row"><div class="bar-label">Device Protection</div><div class="bar-track"><div class="bar-fill" data-val="78"></div></div><div class="bar-val">78%</div></div>
+        <div class="bar-row"><div class="bar-label">Password Awareness</div><div class="bar-track"><div class="bar-fill" data-val="72"></div></div><div class="bar-val">72%</div></div>
+        <div class="bar-row"><div class="bar-label">Cybersecurity Awareness</div><div class="bar-track"><div class="bar-fill" data-val="68"></div></div><div class="bar-val">68%</div></div>
+        <div class="bar-row"><div class="bar-label">Data Protection</div><div class="bar-track"><div class="bar-fill" data-val="80"></div></div><div class="bar-val">80%</div></div>
+      </div>
+
+      <div class="donut-wrap">
+        <div class="donut">
+          <svg width="260" height="260" viewBox="0 0 260 260">
+            <circle cx="130" cy="130" r="100" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="22"/>
+            <circle id="donutArc" cx="130" cy="130" r="100" fill="none"
+                    stroke="url(#dg)" stroke-width="22" stroke-linecap="round"
+                    stroke-dasharray="0 628" pathLength="628"/>
+            <defs>
+              <linearGradient id="dg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#22d3ee"/>
+                <stop offset="100%" stop-color="#8b5cf6"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <div class="donut-center">
+            <div>
+              <b id="donutVal">0%</b>
+              <span>Average Score</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo-note reveal">
+      <i class="fa-solid fa-circle-info"></i>
+      <div><strong>Note:</strong> The numbers shown above are <strong>SAMPLE / DEMO DATA</strong> for illustration. They should be replaced with actual field-study results once data collection is complete.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== THREATS ===================== -->
+<section id="threats">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Risks</span>
+      <h2 class="section-title">Common Cybersecurity Threats in Educational Institutions</h2>
+      <p class="section-sub">Frequent threats that target educational setups and how to prevent them.</p>
+    </div>
+
+    <div class="grid grid-4 reveal">
+      <div class="threat-card">
+        <div class="icon"><i class="fa-solid fa-fish"></i></div>
+        <h3>Phishing</h3>
+        <p>Fake emails or messages that trick users into revealing credentials.</p>
+        <div class="tip"><i class="fa-solid fa-lightbulb"></i> Verify sender and links before clicking.</div>
+      </div>
+      <div class="threat-card">
+        <div class="icon"><i class="fa-solid fa-virus"></i></div>
+        <h3>Malware</h3>
+        <p>Harmful software that damages systems or steals data.</p>
+        <div class="tip"><i class="fa-solid fa-lightbulb"></i> Use updated antivirus software.</div>
+      </div>
+      <div class="threat-card">
+        <div class="icon"><i class="fa-solid fa-lock-open"></i></div>
+        <h3>Ransomware</h3>
+        <p>Malware that encrypts files and demands payment for decryption.</p>
+        <div class="tip"><i class="fa-solid fa-lightbulb"></i> Maintain regular offline backups.</div>
+      </div>
+      <div class="threat-card">
+        <div class="icon"><i class="fa-solid fa-key"></i></div>
+        <h3>Weak Passwords</h3>
+        <p>Easy-to-guess passwords that allow unauthorized access.</p>
+        <div class="tip"><i class="fa-solid fa-lightbulb"></i> Use strong, unique passwords.</div>
+      </div>
+      <div class="threat-card">
+        <div class="icon"><i class="fa-solid fa-user-secret"></i></div>
+        <h3>Social Engineering</h3>
+        <p>Manipulating people into revealing confidential information.</p>
+        <div class="tip"><i class="fa-solid fa-lightbulb"></i> Train staff to verify identities.</div>
+      </div>
+      <div class="threat-card">
+        <div class="icon"><i class="fa-solid fa-file-circle-exclamation"></i></div>
+        <h3>Data Theft</h3>
+        <p>Unauthorized copying or leaking of sensitive institutional data.</p>
+        <div class="tip"><i class="fa-solid fa-lightbulb"></i> Encrypt sensitive information.</div>
+      </div>
+      <div class="threat-card">
+        <div class="icon"><i class="fa-solid fa-right-to-bracket"></i></div>
+        <h3>Unauthorized Access</h3>
+        <p>Access to systems by users without proper permission.</p>
+        <div class="tip"><i class="fa-solid fa-lightbulb"></i> Enforce strict access control.</div>
+      </div>
+      <div class="threat-card">
+        <div class="icon"><i class="fa-solid fa-wifi"></i></div>
+        <h3>Unsafe Wi-Fi</h3>
+        <p>Open or unsecured networks that expose data to attackers.</p>
+        <div class="tip"><i class="fa-solid fa-lightbulb"></i> Use WPA2/WPA3 encryption.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== RECOMMENDATIONS ===================== -->
+<section id="recommendations">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Best Practices</span>
+      <h2 class="section-title">Recommended Cybersecurity Practices</h2>
+      <p class="section-sub">A practical checklist to strengthen cybersecurity in educational institutions.</p>
+    </div>
+
+    <div class="rec-list reveal">
+      <div class="rec-item"><div class="rec-check"><i class="fa-solid fa-check"></i></div><span>Use strong and unique passwords</span></div>
+      <div class="rec-item"><div class="rec-check"><i class="fa-solid fa-check"></i></div><span>Enable multi-factor authentication</span></div>
+      <div class="rec-item"><div class="rec-check"><i class="fa-solid fa-check"></i></div><span>Regularly update operating systems and software</span></div>
+      <div class="rec-item"><div class="rec-check"><i class="fa-solid fa-check"></i></div><span>Install antivirus/endpoint security</span></div>
+      <div class="rec-item"><div class="rec-check"><i class="fa-solid fa-check"></i></div><span>Secure institutional Wi-Fi</span></div>
+      <div class="rec-item"><div class="rec-check"><i class="fa-solid fa-check"></i></div><span>Conduct cybersecurity awareness programs</span></div>
+      <div class="rec-item"><div class="rec-check"><i class="fa-solid fa-check"></i></div><span>Maintain regular data backups</span></div>
+      <div class="rec-item"><div class="rec-check"><i class="fa-solid fa-check"></i></div><span>Restrict unauthorized access</span></div>
+      <div class="rec-item"><div class="rec-check"><i class="fa-solid fa-check"></i></div><span>Create an incident reporting procedure</span></div>
+      <div class="rec-item"><div class="rec-check"><i class="fa-solid fa-check"></i></div><span>Conduct regular security audits</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== STUDENT TIPS ===================== -->
+<section id="tips">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">For Students</span>
+      <h2 class="section-title">Cybersecurity Tips for Students</h2>
+      <p class="section-sub">Simple but effective habits every student should follow online.</p>
+    </div>
+
+    <div class="tips-grid reveal">
+      <div class="tip-card"><span class="tip-emoji">🔐</span><h4>Use Strong Passwords</h4><p>Mix letters, numbers, and symbols.</p></div>
+      <div class="tip-card"><span class="tip-emoji">📧</span><h4>Beware of Phishing Emails</h4><p>Don't trust unknown senders.</p></div>
+      <div class="tip-card"><span class="tip-emoji">🔗</span><h4>Don't Open Suspicious Links</h4><p>Verify URLs before clicking.</p></div>
+      <div class="tip-card"><span class="tip-emoji">📱</span><h4>Keep Devices Updated</h4><p>Install updates promptly.</p></div>
+      <div class="tip-card"><span class="tip-emoji">☁️</span><h4>Protect Cloud Accounts</h4><p>Enable 2FA where possible.</p></div>
+      <div class="tip-card"><span class="tip-emoji">📶</span><h4>Avoid Unsafe Public Wi-Fi</h4><p>Use VPN on public networks.</p></div>
+      <div class="tip-card"><span class="tip-emoji">💾</span><h4>Backup Important Files</h4><p>Keep copies in safe locations.</p></div>
+      <div class="tip-card"><span class="tip-emoji">👤</span><h4>Don't Share Passwords</h4><p>Keep credentials private always.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CONCLUSION ===================== -->
+<section id="conclusion">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Summary</span>
+      <h2 class="section-title">Conclusion</h2>
+    </div>
+
+    <div class="conclusion-wrap reveal">
+      <p>Cybersecurity has become an important part of educational institutions because a large amount of academic, personal, and administrative information is stored digitally. The field study helps identify existing cybersecurity practices, awareness levels, and possible security gaps.</p>
+      <p>Educational institutions should regularly update their security policies, protect their networks and devices, conduct cybersecurity awareness programs, maintain backups, and establish proper incident-response procedures.</p>
+      <p>Cybersecurity is not only the responsibility of the IT department. Students, teachers, and staff also play an important role in maintaining a safe digital environment.</p>
+      <div class="highlight-msg">
+        <i class="fa-solid fa-shield-halved"></i> &nbsp; "Cybersecurity is everyone's responsibility."
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== PROJECT INFO / CONTACT ===================== -->
+<section id="contact">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Project Details</span>
+      <h2 class="section-title">Project Information</h2>
+      <p class="section-sub">Academic details of this college field study project.</p>
+    </div>
+
+    <div class="info-grid reveal">
+      <div class="info-item">
+        <div><span class="label">Project Title</span><span class="value">Field Study on Cybersecurity Policies in Educational Institutions</span></div>
+      </div>
+      <div class="info-item">
+        <div><span class="label">Project Type</span><span class="value">College Field Study Project</span></div>
+      </div>
+      <div class="info-item">
+        <div><span class="label">Course</span><span class="value">B.Sc. Information Technology</span></div>
+      </div>
+      <div class="info-item placeholder">
+        <div><span class="label">Student Name</span><span class="value">[Your Name]</span></div>
+      </div>
+      <div class="info-item placeholder">
+        <div><span class="label">College</span><span class="value">[Your College Name]</span></div>
+      </div>
+      <div class="info-item placeholder">
+        <div><span class="label">Academic Year</span><span class="value">[Academic Year]</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer>
+  <div class="container">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="logo">
+          <div class="logo-icon"><i class="fa-solid fa-shield-halved"></i></div>
+          <div>Cyber<span class="accent">Shield</span> Education</div>
+        </div>
+        <p>Field Study on Cybersecurity Policies in Educational Institutions — a B.Sc. IT college project exploring awareness, practices, and policy gaps.</p>
+        <div class="foot-social">
+          <a href="#" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+          <a href="#" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" aria-label="Email"><i class="fa-solid fa-envelope"></i></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h5>Quick Links</h5>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#survey">Survey</a></li>
+          <li><a href="#findings">Findings</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h5>Study Sections</h5>
+        <ul>
+          <li><a href="#recommendations">Recommendations</a></li>
+          <li><a href="#policies">Policies</a></li>
+          <li><a href="#conclusion">Conclusion</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      © 2026 CyberShield Education | College Field Study Project
+    </div>
+  </div>
+</footer>
+
+<!-- Back to top -->
+<button class="to-top" id="toTop" aria-label="Back to top"><i class="fa-solid fa-arrow-up"></i></button>
+
+<script>
+/* =========================================================
+   CyberShield Education - Interactions
+   ========================================================= */
+
+/* ---------- Navbar scroll + active link ---------- */
+const navbar = document.getElementById('navbar');
+const navLinks = document.querySelectorAll('.nav-links a');
+const sections = document.querySelectorAll('section[id]');
+
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 30);
+
+  // Back to top
+  document.getElementById('toTop').classList.toggle('show', window.scrollY > 500);
+
+  // Active nav link
+  let current = '';
+  sections.forEach(sec => {
+    const top = sec.offsetTop - 120;
+    if (window.scrollY >= top) current = sec.id;
+  });
+  navLinks.forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+/* ---------- Mobile menu ---------- */
+const hamburger = document.getElementById('hamburger');
+const navList = document.getElementById('navLinks');
+hamburger.addEventListener('click', () => {
+  navList.classList.toggle('open');
+  const icon = hamburger.querySelector('i');
+  icon.classList.toggle('fa-bars');
+  icon.classList.toggle('fa-xmark');
+});
+navList.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  navList.classList.remove('open');
+  const icon = hamburger.querySelector('i');
+  icon.classList.add('fa-bars');
+  icon.classList.remove('fa-xmark');
+}));
+
+/* ---------- Back to top ---------- */
+document.getElementById('toTop').addEventListener('click', () => {
+  window.scrollTo({top:0, behavior:'smooth'});
+});
+
+/* ---------- Scroll reveal ---------- */
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+/* ---------- Animated bars + donut ---------- */
+const barChart = document.getElementById('barChart');
+const donutArc = document.getElementById('donutArc');
+const donutVal = document.getElementById('donutVal');
+const totalLen = 628; // pathLength
+
+function animateFindings() {
+  document.querySelectorAll('.bar-fill').forEach(bar => {
+    const v = bar.dataset.val;
+    bar.style.width = v + '%';
+  });
+  // Average of demo values
+  const vals = [...document.querySelectorAll('.bar-fill')].map(b => +b.dataset.val);
+  const avg = Math.round(vals.reduce((a,b)=>a+b,0) / vals.length);
+  let cur = 0;
+  const step = () => {
+    cur += 1;
+    if (cur > avg) cur = avg;
+    const dash = (cur/100) * totalLen;
+    donutArc.setAttribute('stroke-dasharray', `${dash} ${totalLen}`);
+    donutVal.textContent = cur + '%';
+    if (cur < avg) requestAnimationFrame(step);
+  };
+  step();
+}
+
+const findingsSection = document.getElementById('findings');
+const findingsObs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateFindings();
+      findingsObs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+findingsObs.observe(findingsSection);
+
+/* ---------- Survey interaction ---------- */
+const surveyForm = document.getElementById('surveyForm');
+const totalQ = surveyForm.querySelectorAll('.survey-q').length;
+const answers = {};
+
+surveyForm.querySelectorAll('.survey-q').forEach(q => {
+  const qId = q.dataset.q;
+  q.querySelectorAll('.opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      q.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      answers[qId] = opt.dataset.val;
+      updateStatus();
+    });
+  });
+});
+
+const statusEl = document.getElementById('surveyStatus');
+function updateStatus() {
+  const done = Object.keys(answers).length;
+  statusEl.textContent = `${done} of ${totalQ} questions answered.`;
+}
+
+document.getElementById('submitSurvey').addEventListener('click', () => {
+  if (Object.keys(answers).length < totalQ) {
+    statusEl.textContent = `Please answer all ${totalQ} questions before submitting.`;
+    statusEl.style.color = '#fca5a5';
+    setTimeout(()=>{statusEl.style.color='';updateStatus();}, 2500);
+    return;
+  }
+  document.getElementById('thanksBox').classList.add('show');
+  document.getElementById('submitSurvey').disabled = true;
+  document.getElementById('submitSurvey').style.opacity = 0.6;
+  statusEl.textContent = 'Response submitted successfully.';
+  statusEl.style.color = 'var(--cyan)';
+  // Log demo response
+  console.log('Survey responses (demo):', answers);
+});
+
+/* ---------- Particle background (canvas) ---------- */
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+let particles = [];
+function resizeCanvas(){
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+function initParticles(){
+  particles = [];
+  const count = Math.min(70, Math.floor(canvas.width/22));
+  for (let i=0; i<count; i++){
+    particles.push({
+      x: Math.random()*canvas.width,
+      y: Math.random()*canvas.height,
+      vx: (Math.random()-0.5)*0.4,
+      vy: (Math.random()-0.5)*0.4,
+      r: Math.random()*1.6 + 0.6
+    });
+  }
+}
+initParticles();
+window.addEventListener('resize', initParticles);
+
+function drawParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  // lines
+  for (let i=0; i<particles.length; i++){
+    for (let j=i+1; j<particles.length; j++){
+      const p1 = particles[i], p2 = particles[j];
+      const dx = p1.x - p2.x, dy = p1.y - p2.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 120){
+        ctx.strokeStyle = `rgba(34,211,238,${0.18 * (1 - dist/120)})`;
+        ctx.lineWidth = 0.6;
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+    }
+  }
+  // dots
+  particles.forEach(p => {
+    p.x += p.vx; p.y += p.vy;
+    if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+    if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+    ctx.fillStyle = 'rgba(34,211,238,0.7)';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fill();
+  });
+  requestAnimationFrame(drawParticles);
+}
+drawParticles();
+</script>
+</body>
+</html>
